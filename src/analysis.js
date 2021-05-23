@@ -7,7 +7,7 @@ const { getTrips, getDriver } = require('api');
  * @returns {any} Trip data analysis
  */
 
- async function analysis() {
+async function analysis() {
   let cashTrips = 0;
   let nonCashTrips = 0;
   const arr = await getTrips();
@@ -75,7 +75,7 @@ const getNonCashBillTotal = (arr) => {
   return total;
 };
 
- const getAllDrivers = (array) => {
+const getAllDrivers = (array) => {
   let driversArray = [];
   array.forEach((trip) => {
     driversArray.push(trip.driverID);
@@ -179,10 +179,11 @@ const getHighestEarningDriver = async (trips) => {
   }
 
   const maxBill = Math.max(...Object.values(driversObject));
-  const x = Object.entries(driversObject);
-  const newX = x.filter((driver) => driver[1] === maxBill);
-  const noOfTrips = driversTripsObject[newX[0][0]];
-  const driver = await getDriver(newX[0][0]);
+  const driversIdBillArray = Object.entries(driversObject);
+  const maxDriver = driversIdBillArray.filter((driver) => driver[1] === maxBill);
+
+  const noOfTrips = driversTripsObject[maxDriver[0][0]];
+  const driver = await getDriver(maxDriver[0][0]);
 
   const highestEarningDriver = {
     name: driver.name,
